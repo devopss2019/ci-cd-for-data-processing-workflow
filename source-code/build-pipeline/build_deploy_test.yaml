@@ -21,7 +21,7 @@ steps:
   id: 'build-jar'
 - name: gcr.io/cloud-builders/gsutil
   args: ['cp', '*bundled*.jar', 'gs://${_DATAFLOW_JAR_BUCKET}/dataflow_deployment_$BUILD_ID.jar']
-  dir: 'ci-cd-for-data-processing-workflow/data-processing-code/target'
+  dir: 'ci-cd-for-data-processing-workflow/source-code/data-processing-code/target'
   id: 'deploy-jar'
 - name: 'gcr.io/cloud-solutions-images/apache-airflow:1.10'
   entrypoint: 'python'
