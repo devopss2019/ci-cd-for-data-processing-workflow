@@ -15,6 +15,9 @@ steps:
 - name: gcr.io/cloud-builders/git
   args: ['clone', 'https://github.com/bcthis2020/ci-cd-for-data-processing-workflow.git']
   id: 'check-out-source-code'
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'source'
+  args: ['./env-setup/set_env.sh']
 - name: gcr.io/cloud-builders/mvn
   args: ['package','-Dmaven.test.skip=true']
   dir: 'ci-cd-for-data-processing-workflow/source-code/data-processing-code'
