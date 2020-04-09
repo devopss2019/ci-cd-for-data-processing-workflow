@@ -13,20 +13,20 @@
 # limitations under the License.
 steps:
 - name: gcr.io/cloud-builders/git
-  args: ['clone', 'https://github.com/bcthis2020/ci-cd-for-data-processing-workflow']
+  args: ['clone', 'https://github.com/bcthis2020/ci-cd-for-data-processing-workflow.git']
   id: 'check-out-source-code'
 - name: gcr.io/cloud-builders/mvn
   args: ['package', '-q']
-  dir: '$REPO_NAME/data-processing-code'
+  dir: 'ci-cd-for-data-processing-workflow/source-code/data-processing-code'
   id: 'build-jar'
 - name: gcr.io/cloud-builders/gsutil
   args: ['cp', '*bundled*.jar', 'gs://${_DATAFLOW_JAR_BUCKET}/dataflow_deployment_$BUILD_ID.jar']
-  dir: '$REPO_NAME/data-processing-code/target'
+  dir: 'ci-cd-for-data-processing-workflow/data-processing-code/target'
   id: 'deploy-jar'
 - name: 'gcr.io/cloud-solutions-images/apache-airflow:1.10'
   entrypoint: 'python'
   args: ['test_compare_xcom_maps.py']
-  dir: '$REPO_NAME/workflow-dag'
+  dir: 'ci-cd-for-data-processing-workflow/workflow-dag'
   id: 'unit-test-on-operator-code'
 - name: gcr.io/cloud-builders/gsutil
   args: ['cp', 'support-files/input.txt', 'gs://${_COMPOSER_INPUT_BUCKET}']
