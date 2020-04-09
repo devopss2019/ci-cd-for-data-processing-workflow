@@ -17,7 +17,7 @@ steps:
   id: 'check-out-source-code'
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
-  args: ['-c','./env-setup/set_env.sh']
+  args: ['source','-c','./env-setup/set_env.sh']
 - name: gcr.io/cloud-builders/mvn
   args: ['package', '-q']
   dir: '$REPO_NAME/data-processing-code'
